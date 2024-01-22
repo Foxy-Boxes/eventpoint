@@ -1,0 +1,2 @@
+event_table[${event_index}].tick = ${tick};
+event_table[${event_index}].range = ${range};

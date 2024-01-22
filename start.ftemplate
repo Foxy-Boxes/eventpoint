@@ -1,0 +1,6 @@
+void start_${event_name}(${param_list}){ 
+  const event& ev = event_table[${event_index}];
+  param_structure* params = new param_structure();
+  ${param_init}
+  events.emplace(global_tick, ${event_index}, params);
+}

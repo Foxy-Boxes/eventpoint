@@ -1,0 +1,4 @@
+void change_${event_name}(uint64_t tick, uint64_t range){  
+  event_table[${event_index}].tick = tick;
+  event_table[${event_index}].range = range;
+}

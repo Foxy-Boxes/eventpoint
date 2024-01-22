@@ -1,0 +1,31 @@
+#pragma once
+#include <queue>
+#include <vector>
+#include "tick_event.h"
+#include <iostream>
+
+typedef void (*dispatch_t)(priq& events);
+
+dispatch_t dispatch_table[${num_events}];
+event event_table[${num_events}];
+
+${state_variables}
+
+${event_dispatch_codes}
+
+void init_dispatch(){
+  ${event_dispatch_register}
+}
+
+void init_events(){
+  ${event_init}
+}
+
+void init(){
+  init_dispatch();
+  init_events();
+  ${state_reset}
+}
+
+${start_funcs}
+${tick_changes}

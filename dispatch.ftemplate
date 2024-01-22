@@ -1,0 +1,5 @@
+void dispatch_${event_index}(priq& events){
+  tick_event const& tick_ev = events.top();
+  ${triggers}
+  ${update}
+}

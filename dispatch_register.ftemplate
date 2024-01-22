@@ -1,0 +1,1 @@
+dispatch_table[${event_index}] = &dispatch_${event_index};

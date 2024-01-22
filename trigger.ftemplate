@@ -1,0 +1,8 @@
+  if(${condition}){
+    const event& ev = event_table[${next_event}];
+    uint64_t tick = ev.tick + random(ev.range);
+    uint64_t next_tick = global_tick + tick;
+    param_structure* params = new param_structure();
+    ${param_init}
+    events.emplace(next_tick, ${next_event}, params);
+  }

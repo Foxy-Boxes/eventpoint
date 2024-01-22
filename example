@@ -1,0 +1,52 @@
+state can_recv = 1;
+state recv_waiting = 0;
+state blocks = 0;
+count inflight_vec = 100;
+count waiting_vec = 100;
+count num_recv = 0;
+count num_sent = 0;
+state type_of_vec = 0;
+
+event send param int vec {
+  tick 400 range 10;
+  trigger if 1 comm(vec);
+  num_sent = num_sent + 1;
+}
+
+event comm param int vec {
+  tick 20 range 2;
+  trigger if blocks == 0 recv_notification(vec);
+}
+
+event recv_notification param int vec {
+  tick 10 range 0;
+  trigger if can_recv recv_block(vec);
+  recv_waiting = 1 - can_recv;
+  waiting_vec = vec;
+  can_recv = 0;
+  blocks = vec == inflight_vec;
+  inflight_vec = vec;
+}
+
+event recv_block param int vec {
+  tick 500 range 60;
+  trigger if 1 recv_post(vec);
+  blocks = 0;
+}
+
+event recv_post param int vec {
+  tick 80 range 10;
+  trigger if recv_waiting recv_block(waiting_vec);
+  can_recv = recv_waiting == 0;
+  num_recv = num_recv +1;
+  recv_waiting = 0;
+}
+
+event period param int num_interrupts {
+  tick 500 range 0;
+  trigger if num_sent != num_interrupts send(type_of_vec),
+  trigger if num_sent != num_interrupts period(num_interrupts);
+}
+
+change period;
+
